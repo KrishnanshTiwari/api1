@@ -22,6 +22,14 @@ const createOrganization = async (req, res) => {
   if (error) {
     return res.status(400).send({ error: error.details[0].message });
   }
+  const { uid } = req.headers; // Get the user's unique identifier from the headers
+
+  if (!uid) {
+    return res.status(401).json({ error: "Unauthorized" });
+  }
+
+  // Add the user's unique identifier to the event data
+  newOrganization.createdBy = uid;
   try {
     await db.collection('organizations').add(newOrganization);
     res.status(201).json({ message: 'Organization created successfully' });

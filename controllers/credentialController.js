@@ -14,11 +14,17 @@ const issueCredential = async (req, res) => {
     if (!eventData) {
       return res.status(404).json({ error: "Event not found" });
     }
+    const { uid } = req.headers; // Get the user's unique identifier from the headers
+
+    if (!uid) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
 
     // Generate credential data
     const credentialData = {
       eventName: eventData.name,
-      designUrl: eventData.design, // Assuming this holds the URL to the design
+      designUrl: eventData.design,
+      user : uid,
       // Add other credential data as needed
     };
 

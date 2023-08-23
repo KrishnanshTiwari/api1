@@ -15,6 +15,7 @@ const designRoutes = require('./routes/designRoutes');
 const eventRoutes = require('./routes/eventRoutes');
 const credentialRoutes = require('./routes/credentialRoutes');
 const supportRoutes = require('./routes/supportRoutes');
+const authRoutes = require('./routes/authRoutes'); // Add this line
 
 // Registering routes
 app.use('/', organizationRoutes);
@@ -22,6 +23,9 @@ app.use('/', designRoutes);
 app.use('/', eventRoutes);
 app.use('/', credentialRoutes);
 app.use('/', supportRoutes);
+app.use('/auth', authRoutes); // Add this line
+
+
 
 // Default route
 app.get('/', (req, res) => {

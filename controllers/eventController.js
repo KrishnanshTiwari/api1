@@ -24,6 +24,14 @@ const createEvent = async (req, res) => {
   if (error) {
     return res.status(400).send({ error: error.details[0].message });
   }
+  const { uid } = req.headers; // Get the user's unique identifier from the headers
+
+  if (!uid) {
+    return res.status(401).json({ error: "Unauthorized" });
+  }
+
+  // Add the user's unique identifier to the event data
+  newEvent.createdBy = uid;
 
     // Create a new event in Firestore under the specified organization
     const eventCollection = db.collection("organizations").doc(organizationId).collection("events");

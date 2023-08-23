@@ -12,7 +12,13 @@ const createDesign = async (req, res) => {
       return res.status(400).json({ error: "No file provided" });
     }
     const { organizationId } = req.params;
-    const fileUrl = await uploadFile(req.file.buffer, `${organizationId}/${req.file.originalname}`);
+    const { uid } = req.headers; // Get the user's unique identifier from the headers
+
+    if (!uid) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    const fileUrl = await uploadFile(req.file.buffer, `${organizationId}/${uid}/${req.file.originalname}`);
 
     
     return res.status(201).json({ fileUrl });

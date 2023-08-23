@@ -19,8 +19,9 @@ admin.initializeApp({
   databaseURL: "https://laserpay-ab8f5.firebaseio.com" 
 });
 
+const auth = admin.auth();
 const storage = admin.storage();
 const bucket = storage.bucket();
 const db = admin.firestore();
 
-module.exports = { bucket,db };
+module.exports = {auth, bucket,db };
