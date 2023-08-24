@@ -50,7 +50,7 @@ const signIn = async (req, res) => {
 
 const logout = async (req, res) => {
   try {
-    await auth().signOut();
+    await auth.signOut();
     res.status(200).json({ message: "Logged out successfully" });
   } catch (error) {
     res.status(500).json({ error: "Unable to logout", details: error.message });
