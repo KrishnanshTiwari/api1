@@ -9,7 +9,10 @@ const userSchema = Joi.object({
 const getOrganizations = async (req, res) => {
   try {
     const organizationsSnapshot = await db.collection('organizations').get();
-    const organizations = organizationsSnapshot.docs.map(doc => doc.data());
+    const organizations = organizationsSnapshot.docs.map(doc => ({
+      organizationId: doc.id, // Add the organizationId
+      ...doc.data() // Include other organization details
+    }));
     res.json(organizations);
   } catch (error) {
     res.status(500).json({ error: 'Unable to retrieve organizations' });
