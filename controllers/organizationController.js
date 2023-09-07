@@ -42,7 +42,36 @@ const createOrganization = async (req, res) => {
   }
 };
 
+const deleteOrganization = async (req, res) => {
+  const { organizationId } = req.params;
+  try {
+    // Check if the organization exists
+    const organizationRef = db.collection('organizations').doc(organizationId);
+    const organizationDoc = await organizationRef.get();
+
+    if (!organizationDoc.exists) {
+      return res.status(404).json({ error: 'Organization not found' });
+    }
+
+    // Check if the user has permission to delete the organization
+    const { uid } = req.headers; // Get the user's unique identifier from the headers
+    if (organizationDoc.data().createdBy !== uid) {
+      return res.status(403).json({ error: 'Unauthorized to delete this organization' });
+    }
+
+    // Delete the organization
+    await organizationRef.delete();
+
+    res.status(200).json({ message: 'Organization deleted successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Unable to delete organization' });
+  }
+};
+
 module.exports = {
   getOrganizations,
-  createOrganization
+  createOrganization,
+  deleteOrganization, // Add the new deleteOrganization function
 };
+
