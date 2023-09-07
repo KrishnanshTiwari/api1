@@ -16,8 +16,8 @@ const serviceAccount ={
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  storageBucket: "laserpay-59e50.appspot.com",
-  databaseURL: "https://laserpay-59e50.firebaseio.com" 
+  storageBucket: "laser-59e50.appspot.com",
+  databaseURL: "https://laser-59e50.firebaseio.com" 
 });
 
 const auth = admin.auth();
